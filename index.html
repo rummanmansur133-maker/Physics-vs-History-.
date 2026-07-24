@@ -597,3 +597,307 @@ h.remove();
 
 
 </script>
+<style>
+
+/* Final Proposal */
+
+.bigHeart{
+
+font-size:160px;
+
+animation:bigPulse 1.5s infinite;
+
+filter:
+drop-shadow(0 0 45px red);
+
+}
+
+
+@keyframes bigPulse{
+
+0%,100%{
+
+transform:scale(1);
+
+}
+
+50%{
+
+transform:scale(1.3);
+
+}
+
+}
+
+
+
+.proposalText{
+
+font-size:40px;
+
+color:#ffd1dc;
+
+margin-top:25px;
+
+text-shadow:
+0 0 25px pink;
+
+}
+
+
+
+.yesButton{
+
+margin-top:35px;
+
+padding:15px 50px;
+
+border:none;
+
+border-radius:50px;
+
+font-size:22px;
+
+background:#ff3366;
+
+color:white;
+
+cursor:pointer;
+
+box-shadow:
+0 0 30px #ff3366;
+
+}
+
+
+
+
+/* Firework */
+
+.particle{
+
+position:absolute;
+
+font-size:30px;
+
+animation:explode 2s forwards;
+
+}
+
+
+
+@keyframes explode{
+
+from{
+
+transform:
+translate(0,0);
+
+opacity:1;
+
+}
+
+
+to{
+
+transform:
+translate(var(--x),var(--y));
+
+opacity:0;
+
+}
+
+}
+
+
+
+.finalScreen{
+
+font-size:30px;
+
+text-align:center;
+
+line-height:1.8;
+
+}
+
+
+</style>
+
+
+
+<!-- Final Scene -->
+
+<div class="scene" id="scene4">
+
+
+<div class="bigHeart">
+❤️
+</div>
+
+
+<h1 class="proposalText">
+
+💍 Will you be mine for life?
+
+</h1>
+
+
+
+<button class="yesButton" onclick="acceptLove()">
+
+YES ❤️
+
+</button>
+
+
+</div>
+
+
+
+
+<script>
+
+
+// Start Proposal Scene
+
+
+setTimeout(()=>{
+
+
+document
+.getElementById("scene3")
+.classList.remove("active");
+
+
+document
+.getElementById("scene4")
+.classList.add("active");
+
+
+},27000);
+
+
+
+
+
+
+function acceptLove(){
+
+
+document.body.innerHTML=`
+
+<div style="
+
+height:100vh;
+
+background:
+radial-gradient(circle,#ff4d6d,#000);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+color:white;
+
+padding:20px;
+
+font-family:sans-serif;
+
+">
+
+
+<div class="finalScreen">
+
+
+🎉❤️ Morium ❤️🎉
+
+<br><br>
+
+
+Thank you for being special
+
+
+<br><br>
+
+
+I promise to always support you ❤️
+
+
+<br><br>
+
+
+✨ Forever Special ✨
+
+
+</div>
+
+
+</div>
+
+`;
+
+
+
+fireworks();
+
+
+}
+
+
+
+
+function fireworks(){
+
+
+
+for(let i=0;i<100;i++){
+
+
+let p=document.createElement("div");
+
+
+p.className="particle";
+
+
+p.innerHTML="✨";
+
+
+p.style.left="50%";
+
+p.style.top="50%";
+
+
+
+p.style.setProperty(
+"--x",
+(Math.random()*700-350)+"px"
+);
+
+
+
+p.style.setProperty(
+"--y",
+(Math.random()*700-350)+"px"
+);
+
+
+
+document.body.appendChild(p);
+
+
+
+}
+
+
+
+}
+
+
+</script>
+
+
+</body>
+</html>
