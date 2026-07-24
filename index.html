@@ -253,3 +253,347 @@ You make ordinary moments feel magical ✨
 
 
 </div>
+<!-- Scene 3 -->
+
+<div class="scene" id="scene3">
+
+<h1>
+A Little Message For You ❤️
+</h1>
+
+<p class="loveText" id="loveMessage"></p>
+
+</div>
+
+
+</div>
+
+
+
+<style>
+
+/* Rose Petals */
+
+.rose{
+
+position:absolute;
+top:-50px;
+font-size:30px;
+animation:fallRose linear infinite;
+z-index:2;
+
+}
+
+
+@keyframes fallRose{
+
+0%{
+transform:
+translateY(-50px)
+rotate(0deg);
+opacity:1;
+}
+
+100%{
+transform:
+translateY(110vh)
+rotate(360deg);
+opacity:0;
+}
+
+}
+
+
+/* Floating Hearts */
+
+.floatHeart{
+
+position:absolute;
+bottom:-50px;
+font-size:25px;
+animation:heartFloat linear infinite;
+z-index:3;
+
+}
+
+
+@keyframes heartFloat{
+
+0%{
+
+transform:
+translateY(0)
+scale(.5);
+
+opacity:0;
+
+}
+
+
+30%{
+
+opacity:1;
+
+}
+
+
+100%{
+
+transform:
+translateY(-110vh)
+scale(1.5);
+
+opacity:0;
+
+}
+
+}
+
+
+/* Love Text */
+
+.loveText{
+
+font-size:25px;
+color:#ffd6e0;
+margin-top:25px;
+
+animation:glowText 2s infinite alternate;
+
+}
+
+
+@keyframes glowText{
+
+from{
+
+text-shadow:
+0 0 5px white;
+
+}
+
+to{
+
+text-shadow:
+0 0 30px pink;
+
+}
+
+}
+
+
+</style>
+
+
+
+
+<script>
+
+
+// Stars
+
+let space=document.getElementById("space");
+
+
+for(let i=0;i<150;i++){
+
+let star=document.createElement("div");
+
+star.className="star";
+
+star.style.left=Math.random()*100+"%";
+
+star.style.top=Math.random()*100+"%";
+
+
+space.appendChild(star);
+
+}
+
+
+
+// Shooting Stars
+
+setInterval(()=>{
+
+let s=document.createElement("div");
+
+s.className="shooting";
+
+s.style.top=Math.random()*60+"%";
+
+space.appendChild(s);
+
+
+setTimeout(()=>{
+
+s.remove();
+
+},3000);
+
+
+},2500);
+
+
+
+
+// Scene Change 1 to 2
+
+setTimeout(()=>{
+
+document
+.getElementById("scene1")
+.classList.remove("active");
+
+
+document
+.getElementById("scene2")
+.classList.add("active");
+
+
+},6000);
+
+
+
+
+
+// Love Lines
+
+let lines=[
+
+"Your smile makes my world brighter ✨",
+
+"Every moment with you becomes a beautiful memory 🌹",
+
+"You are the special chapter of my story ❤️",
+
+"I don't need a perfect world...",
+
+"I just need a world where you are with me 💖"
+
+];
+
+
+let line=0;
+
+
+function showLines(){
+
+if(line < lines.length){
+
+document
+.getElementById("loveMessage")
+.innerHTML=lines[line];
+
+line++;
+
+setTimeout(showLines,2500);
+
+}
+
+}
+
+
+
+
+// Scene 3
+
+setTimeout(()=>{
+
+
+document
+.getElementById("scene2")
+.classList.remove("active");
+
+
+document
+.getElementById("scene3")
+.classList.add("active");
+
+
+showLines();
+
+
+},13000);
+
+
+
+
+
+
+// Falling Roses
+
+setInterval(()=>{
+
+
+let r=document.createElement("div");
+
+r.className="rose";
+
+r.innerHTML="🌹";
+
+
+r.style.left=
+Math.random()*100+"%";
+
+
+r.style.animationDuration=
+(5+Math.random()*5)+"s";
+
+
+document.body.appendChild(r);
+
+
+
+setTimeout(()=>{
+
+r.remove();
+
+},10000);
+
+
+
+},700);
+
+
+
+
+
+
+// Floating Hearts
+
+setInterval(()=>{
+
+
+let h=document.createElement("div");
+
+h.className="floatHeart";
+
+h.innerHTML="❤️";
+
+
+h.style.left=
+Math.random()*100+"%";
+
+
+h.style.animationDuration=
+(5+Math.random()*5)+"s";
+
+
+document.body.appendChild(h);
+
+
+
+setTimeout(()=>{
+
+h.remove();
+
+},10000);
+
+
+
+},900);
+
+
+
+</script>
