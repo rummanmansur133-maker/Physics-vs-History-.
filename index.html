@@ -125,3 +125,65 @@ document.getElementById("content").innerHTML=`
 <button onclick="celebrate()">Yes 💖</button>
 `;
 }
+function celebrate(){
+
+document.body.innerHTML=`
+<style>
+body{
+margin:0;
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+background:#000;
+font-family:Arial,sans-serif;
+color:#fff;
+}
+h1{
+font-size:42px;
+text-align:center;
+animation:fade 2s;
+}
+p{
+font-size:22px;
+opacity:.9;
+}
+.c{
+position:fixed;
+top:-20px;
+font-size:20px;
+animation:fall 4s linear forwards;
+}
+@keyframes fall{
+to{
+transform:translateY(110vh) rotate(720deg);
+opacity:0;
+}
+}
+@keyframes fade{
+from{opacity:0;transform:scale(.8);}
+to{opacity:1;transform:scale(1);}
+}
+</style>
+
+<h1>❤️ Thank You ❤️</h1>
+<p>You made my heart smile.</p>
+`;
+
+for(let i=0;i<180;i++){
+let e=document.createElement("div");
+e.className="c";
+e.innerHTML=Math.random()>0.5?"❤️":"✨";
+e.style.left=Math.random()*100+"vw";
+e.style.animationDelay=Math.random()*2+"s";
+document.body.appendChild(e);
+}
+
+}
+
+</script>
+
+</body>
+</html>
