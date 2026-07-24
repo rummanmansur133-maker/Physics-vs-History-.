@@ -3,43 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Something Special For You</title>
+  <title>A Special Surprise for Morium</title>
+  <!-- Google Fonts for Typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&family=Sacramento&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif, cursive;
-    }
-
+    /* --- Reset & Base --- */
+    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+    
     body {
-      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #feada6 100%);
+      background: #0a0a0c;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      font-family: 'Montserrat', sans-serif;
       overflow: hidden;
+      perspective: 1000px; /* For 3D effects */
     }
 
-    /* Mobile Container Frame */
-    .mobile-card {
+    /* --- Background Magic (Gradient + Floating Hearts) --- */
+    .bg-animation {
+      position: fixed;
       width: 100%;
-      max-width: 380px;
-      height: 90vh;
-      max-height: 700px;
-      background: #ffffff;
-      border-radius: 25px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+      height: 100%;
+      background: linear-gradient(135deg, #111113 0%, #2a0816 50%, #111113 100%);
+      z-index: -1;
+    }
+    .bg-heart {
+      position: absolute;
+      color: rgba(255, 71, 87, 0.15);
+      font-size: 20px;
+      animation: floatBG infinite linear;
+      pointer-events: none;
+    }
+    @keyframes floatBG {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* --- Fancy Mobile Container (Glassmorphism) --- */
+    .mobile-frame {
+      width: 90%;
+      max-width: 370px;
+      height: 85vh;
+      max-height: 670px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 40px;
+      backdrop-filter: blur(15px) saturate(180%);
+      -webkit-backdrop-filter: blur(15px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 25px 45px rgba(0,0,0,0.5), 0 0 30px rgba(232, 67, 147, 0.2);
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
       padding: 25px;
       text-align: center;
     }
 
+    /* --- Page handling --- */
     .page {
       display: none;
       width: 100%;
@@ -47,250 +71,409 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      animation: fadeIn 0.8s ease-in-out forwards;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
-
     .page.active {
       display: flex;
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* --- Fancy Elements --- */
+    .heart-icon-main {
+      font-size: 60px;
+      color: #ff4757;
+      margin-bottom: 20px;
+      animation: heartPulse 1.5s infinite;
+      filter: drop-shadow(0 0 10px rgba(255, 71, 87, 0.6));
+    }
+    @keyframes heartPulse {
+      0% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255, 71, 87, 0.4)); }
+      50% { transform: scale(1.15); filter: drop-shadow(0 0 15px rgba(255, 71, 87, 0.8)); }
+      100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255, 71, 87, 0.4)); }
     }
 
-    /* Page 1 Styling */
-    .page-1 h2 {
-      color: #d63384;
-      font-size: 22px;
-      margin-bottom: 30px;
-      line-height: 1.5;
+    h2.fancy-text {
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
 
-    .btn {
-      background: #ff4757;
+    /* --- Fancy Button --- */
+    .fancy-btn {
+      background: linear-gradient(45deg, #e84393, #ff4757);
       color: white;
       border: none;
-      padding: 12px 35px;
-      font-size: 18px;
-      font-weight: bold;
-      border-radius: 30px;
+      padding: 15px 45px;
+      font-size: 16px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 5px 20px rgba(232, 67, 147, 0.4);
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
-
-    .btn:hover {
-      transform: scale(1.05);
-      background: #ff6b81;
+    .fancy-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(232, 67, 147, 0.6);
     }
+    .fancy-btn:active { transform: translateY(1px); }
 
-    /* Page 2 Envelope & Letter */
+    /* --- Page 2: Fancy Envelope (3D) --- */
     .envelope-wrapper {
       position: relative;
       width: 250px;
-      height: 180px;
-      background: #ff7675;
-      border-radius: 10px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      height: 160px;
+      background: #333;
       cursor: pointer;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      margin-top: 50px;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
     }
-
-    .envelope-text {
-      color: white;
-      font-size: 14px;
-      font-weight: bold;
+    .envelope-wrapper:hover {
+      transform: translateY(-5px) rotateX(5deg);
+      box-shadow: 0 15px 40px rgba(232, 67, 147, 0.2);
+    }
+    .envelope-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 0; height: 0;
+      border-left: 125px solid transparent;
+      border-right: 125px solid transparent;
+      border-top: 90px solid #555;
+      transform-origin: top;
+      transition: transform 0.6s ease;
       z-index: 2;
     }
-
-    .letter {
+    .envelope-wrapper.open::before {
+      transform: rotateX(180deg);
+    }
+    .click-text {
       position: absolute;
-      top: 5px;
+      top: 60%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: #bbb;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      z-index: 1;
+    }
+
+    /* --- Letter Popup (Glassmorphism) --- */
+    .letter-popup {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0) rotate(-10deg);
       width: 90%;
-      height: 90%;
-      background: #fff;
-      border-radius: 8px;
-      padding: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      display: none;
+      height: 85%;
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      display: flex;
       flex-direction: column;
       justify-content: space-between;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      z-index: 10;
+      opacity: 0;
+      transition: all 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+    .letter-popup.show {
+      transform: translate(-50%, -50%) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    
+    .letter-text {
       text-align: left;
       overflow-y: auto;
-      border: 1px solid #ffeaa7;
-      animation: openLetter 0.6s ease-in-out forwards;
-      z-index: 5;
+      padding-right: 5px;
     }
+    .letter-text::-webkit-scrollbar { width: 3px; }
+    .letter-text::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
 
-    .letter.open {
-      display: flex;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 320px;
-      height: 420px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      background: #fffaf0;
+    .dear {
+      font-family: 'Sacramento', cursive;
+      font-size: 36px;
+      color: #ff4757;
+      margin-bottom: 15px;
+      opacity: 0;
     }
-
-    @keyframes openLetter {
-      from { transform: translate(-50%, -40%) scale(0.8); opacity: 0; }
-      to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    .main-body {
+      color: #ddd;
+      font-size: 15px;
+      line-height: 1.8;
+      font-weight: 400;
+      min-height: 100px;
     }
-
-    .letter p {
-      color: #2d3436;
-      font-size: 14px;
-      line-height: 1.6;
-      white-space: pre-line;
-    }
-
-    /* Page 3 Styling */
-    .page-3 h2 {
-      color: #d63384;
+    .love-you {
+      font-family: 'Dancing Script', cursive;
       font-size: 26px;
-      margin-bottom: 35px;
+      color: #e84393;
+      font-weight: 700;
+      margin-top: 20px;
+      opacity: 0;
     }
 
+    /* --- Page 3 --- */
+    .page-3 h2.fancy-title {
+      font-family: 'Sacramento', cursive;
+      font-size: 40px;
+      color: #fff;
+      margin-bottom: 50px;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
     .btn-group {
-      display: flex;
-      gap: 20px;
+      display: flex; gap: 20px;
       position: relative;
     }
-
     .btn-no {
-      background: #a4b0be;
-      box-shadow: 0 5px 15px rgba(164, 176, 190, 0.4);
+      background: rgba(255,255,255,0.1);
+      color: #aaa;
+      box-shadow: none;
     }
+    .btn-no:hover { background: rgba(255,255,255,0.15); color: #fff; box-shadow: none;}
 
-    /* Fireworks & Heart Rain */
-    .heart {
+    /* --- Rain Elements --- */
+    .rain-heart {
       position: absolute;
-      color: #ff4757;
-      font-size: 20px;
+      font-size: 22px;
       user-select: none;
       pointer-events: none;
-      animation: fall 3s linear forwards;
+      animation: heartRain 3s linear forwards;
+      z-index: 5;
+    }
+    @keyframes heartRain {
+      0% { transform: translateY(-10vh) scale(0) rotate(0deg); opacity: 1; }
+      10% { transform: translateY(0vh) scale(1.2); }
+      100% { transform: translateY(90vh) scale(0.8) rotate(360deg); opacity: 0; }
+    }
+    
+    #fireworksCanvas {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 20;
     }
 
-    @keyframes fall {
-      0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-    }
-
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 10;
-    }
   </style>
 </head>
 <body>
 
-  <div class="mobile-card">
+  <!-- Magical Background -->
+  <div class="bg-animation" id="bgAnimation"></div>
+
+  <!-- Mobile Frame -->
+  <div class="mobile-frame">
     <canvas id="fireworksCanvas"></canvas>
 
     <!-- Page 1 -->
     <div class="page page-1 active" id="page1">
-      <h2>something special is waiting for you,, do you want to enter</h2>
-      <button class="btn" onclick="nextPage(2)">Yes</button>
+      <div class="heart-icon-main">💖</div>
+      <h2 class="fancy-text">something special is waiting for you,, do you want to enter?</h2>
+      <button class="fancy-btn" onclick="nextPage(2)">Enter</button>
     </div>
 
     <!-- Page 2 -->
     <div class="page page-2" id="page2">
+      <div class="heart-icon-main" style="font-size: 40px; position: absolute; top: 20px;">✉️</div>
       <div class="envelope-wrapper" id="envelope" onclick="openLetter()">
-        <span class="envelope-text">✉️ চিঠির খামে ক্লিক করুন</span>
+        <span class="click-text">Click to open</span>
       </div>
 
-      <!-- Popup Letter -->
-      <div class="letter" id="letter">
-        <div>
-          <p style="font-weight: bold; font-size: 16px; color: #d63384; margin-bottom: 8px;">Dear Morium</p>
-          <p>Tumi hole Amar jiboner sob kisu,, Tumi Amar Kase the most perfect girl in the world, Ami Jani na Ami tomar Kase Kemon but Ami tomake aktai Kotha bolte chai 'Ami tomake valobasi'</p>
-          <p style="font-weight: bold; margin-top: 10px; color: #ff4757;">I love you</p>
+      <!-- Letter Popup -->
+      <div class="letter-popup" id="letterPopup">
+        <div class="letter-text scrollbar">
+          <div class="dear" id="dearText">Dear Morium,</div>
+          <div class="main-body" id="bodyText"></div>
+          <div class="love-you" id="loveYouText">I love you</div>
         </div>
-        <button class="btn" style="align-self: center; margin-top: 15px;" onclick="nextPage(3)">Next</button>
+        <button class="fancy-btn" style="padding: 10px 30px; font-size: 14px; margin-top: 15px; display: none;" id="letterNextBtn" onclick="nextPage(3)">Next</button>
       </div>
     </div>
 
     <!-- Page 3 -->
     <div class="page page-3" id="page3">
-      <h2>Will you be mine forever? ❤️</h2>
+      <div class="heart-icon-main">💍</div>
+      <h2 class="fancy-title">Will you be mine forever?</h2>
       <div class="btn-group">
-        <button class="btn" onclick="celebrate()">Yes</button>
-        <button class="btn btn-no" id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
+        <button class="fancy-btn" onclick="celebrate()">Yes</button>
+        <button class="fancy-btn btn-no" id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
       </div>
     </div>
   </div>
 
   <script>
+    // --- Create Floating Background Hearts ---
+    const bg = document.getElementById('bgAnimation');
+    for (let i = 0; i < 20; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('bg-heart');
+      heart.innerHTML = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      heart.style.animationDelay = Math.random() * 5 + 's';
+      bg.appendChild(heart);
+    }
+
+    // --- Page Navigation ---
     function nextPage(pageNumber) {
       document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
       document.getElementById('page' + pageNumber).classList.add('active');
+      
+      // If moving to page 1, reset elements just in case
+      if(pageNumber === 1) {
+          resetLetter();
+      }
     }
+
+    // --- Page 2: Letter Animation & Typewriter ---
+    const letterText = "Tumi hole Amar jiboner sob kisu,, Tumi Amar Kase the most perfect girl in the world, Ami Jani na Ami tomar Kase Kemon but Ami tomake aktai Kotha bolte chai 'Ami tomake valobasi'";
 
     function openLetter() {
-      document.getElementById('letter').classList.add('open');
+      const envelope = document.getElementById('envelope');
+      const popup = document.getElementById('letterPopup');
+      
+      envelope.classList.add('open');
+      
+      // Show popup after envelope flap opens
+      setTimeout(() => {
+        popup.classList.add('show');
+        startTypewriter();
+      }, 600);
+    }
+    
+    function startTypewriter() {
+        const dear = document.getElementById('dearText');
+        const body = document.getElementById('bodyText');
+        const loveYou = document.getElementById('loveYouText');
+        const nextBtn = document.getElementById('letterNextBtn');
+        
+        // Reset texts
+        body.innerHTML = "";
+        dear.style.opacity = 0;
+        loveYou.style.opacity = 0;
+        nextBtn.style.display = 'none';
+
+        // 1. Fade in Dear
+        setTimeout(() => { 
+            dear.style.transition = "opacity 1s ease";
+            dear.style.opacity = 1; 
+        }, 500);
+
+        // 2. Typewriter Body
+        let i = 0;
+        setTimeout(() => {
+            function type() {
+                if (i < letterText.length) {
+                    body.innerHTML += letterText.charAt(i);
+                    i++;
+                    setTimeout(type, 50); // Speed of typing
+                } else {
+                    // 3. Fade in Love You & Next Button when done
+                    setTimeout(() => {
+                        loveYou.style.transition = "opacity 1s ease";
+                        loveYou.style.opacity = 1;
+                        setTimeout(() => {
+                            nextBtn.style.display = 'inline-block';
+                            nextBtn.style.animation = "zoomIn 0.5s ease";
+                        }, 500);
+                    }, 500);
+                }
+            }
+            type();
+        }, 1500);
     }
 
-    // Interactive 'No' button dodge trick
+    function resetLetter() {
+        document.getElementById('envelope').classList.remove('open');
+        document.getElementById('letterPopup').classList.remove('show');
+    }
+
+    // --- Page 3: 'No' Button Trick ---
     function moveNoButton() {
       const btn = document.getElementById('noBtn');
-      const x = Math.random() * 140 - 70;
-      const y = Math.random() * 140 - 70;
+      // Calculate random move within visible container area
+      const x = Math.random() * 120 - 60; // moves -60px to +60px
+      const y = Math.random() * 80 - 40;  // moves -40px to +40px
+      btn.style.transition = "transform 0.2s ease";
       btn.style.transform = `translate(${x}px, ${y}px)`;
     }
 
-    // Celebration: Love Rain & Fireworks
+    // --- Celebration: Love Rain & Fireworks ---
     function celebrate() {
       startHeartRain();
       startFireworks();
-      document.querySelector('.page-3 h2').innerHTML = "Yay! 💖<br>I Love You Forever! 💕";
+      
+      // Update Page 3 content with a fancy ending
+      const page3 = document.getElementById('page3');
+      page3.innerHTML = `
+        <div class="heart-icon-main">💖</div>
+        <h2 class="fancy-title" style="font-size: 45px;">Yay! 🎉</h2>
+        <p style="color: #fff; font-family: 'Dancing Script', cursive; font-size: 28px; margin-top: -20px;">I Love You Forever, Morium!</p>
+      `;
     }
 
-    // Heart Rain Effect
+    // Heart Rain Effect inside the Mobile Frame
     function startHeartRain() {
+      const frame = document.querySelector('.mobile-frame');
       setInterval(() => {
         const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.innerHTML = ['❤️', '💖', '💗', '💕', '✨'][Math.floor(Math.random() * 5)];
-        heart.style.left = Math.random() * 100 + '%';
-        heart.style.animationDuration = Math.random() * 2 + 2 + 's';
-        document.body.appendChild(heart);
+        heart.classList.add('rain-heart');
+        // Random romantic emojis
+        const hearts = ['❤️', '💖', '💗', '💕', '🌸', '✨'];
+        heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = (Math.random() * 80 + 10) + '%'; // Keep within frame
+        heart.style.animationDuration = (Math.random() * 1.5 + 2) + 's';
+        frame.appendChild(heart);
 
-        setTimeout(() => { heart.remove(); }, 4000);
-      }, 150);
+        setTimeout(() => { heart.remove(); }, 3000);
+      }, 150); // Create new heart every 150ms
     }
 
-    // Canvas Fireworks Effect
+    // Canvas Fireworks Effect inside the Mobile Frame
     function startFireworks() {
       const canvas = document.getElementById('fireworksCanvas');
       const ctx = canvas.getContext('2d');
+      // Set canvas size to match the frame
       canvas.width = canvas.parentElement.clientWidth;
       canvas.height = canvas.parentElement.clientHeight;
 
       let particles = [];
 
-      for (let i = 0; i < 80; i++) {
-        particles.push({
-          x: canvas.width / 2,
-          y: canvas.height / 2,
-          dx: (Math.random() - 0.5) * 8,
-          dy: (Math.random() - 0.5) * 8,
-          size: Math.random() * 4 + 2,
-          color: `hsl(${Math.random() * 360}, 100%, 60%)`,
+      function createParticle(x, y) {
+        return {
+          x: x,
+          y: y,
+          dx: (Math.random() - 0.5) * 7,
+          dy: (Math.random() - 0.5) * 7,
+          size: Math.random() * 3 + 1,
+          color: `hsl(${Math.random() * 360}, 100%, 70%)`,
           life: 100
-        });
+        };
       }
+
+      function createBurst() {
+          const x = Math.random() * canvas.width;
+          const y = Math.random() * (canvas.height * 0.6); // Keep in top 60%
+          for (let i = 0; i < 50; i++) {
+            particles.push(createParticle(x, y));
+          }
+      }
+
+      // Start bursts
+      setInterval(createBurst, 500); // New burst every 500ms
 
       function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -302,7 +485,11 @@
             ctx.fill();
             p.x += p.dx;
             p.y += p.dy;
-            p.life--;
+            p.dy += 0.05; // gravity
+            p.life -= 1;
+            p.size *= 0.98; // shrink
+          } else {
+            particles.splice(index, 1);
           }
         });
         requestAnimationFrame(animate);
