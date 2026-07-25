@@ -8,7 +8,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
   <!-- GSAP Animation Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -24,12 +24,11 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: #050515;
+      background: #03030c;
       font-family: 'Poppins', sans-serif;
       color: #ffffff;
     }
 
-    /* Background Canvas */
     canvas {
       position: fixed;
       top: 0;
@@ -40,7 +39,6 @@
       pointer-events: none;
     }
 
-    /* Scene Overlay Containers */
     .scene {
       position: absolute;
       top: 0;
@@ -64,23 +62,14 @@
       pointer-events: auto;
     }
 
-    /* Typography & Buttons */
-    h1, h2 {
+    h1, h2, h3 {
       font-family: 'Cinzel', serif;
-      letter-spacing: 1px;
-    }
-
-    .name-title {
-      font-family: 'Dancing Script', cursive;
-      font-size: 3.5rem;
-      color: #ff6b8b;
-      text-shadow: 0 0 20px rgba(255, 107, 139, 0.8), 0 0 40px rgba(255, 107, 139, 0.5);
-      margin: 15px 0;
+      letter-spacing: 1.5px;
     }
 
     .btn {
       margin-top: 30px;
-      padding: 14px 36px;
+      padding: 14px 38px;
       font-size: 1.1rem;
       font-family: 'Poppins', sans-serif;
       color: #fff;
@@ -88,7 +77,7 @@
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      box-shadow: 0 0 20px rgba(255, 75, 110, 0.5);
+      box-shadow: 0 0 25px rgba(255, 75, 110, 0.6);
       outline: none;
       transform: scale(1);
       transition: all 0.3s ease;
@@ -96,10 +85,9 @@
 
     .btn:hover {
       transform: scale(1.08);
-      box-shadow: 0 0 30px rgba(255, 75, 110, 0.8);
+      box-shadow: 0 0 35px rgba(255, 75, 110, 0.9);
     }
 
-    /* Glow Elements */
     .glowing-heart {
       font-size: 4rem;
       color: #ff3366;
@@ -113,9 +101,8 @@
       100% { transform: scale(1.15); text-shadow: 0 0 35px #ff3366, 0 0 60px #ff3366; }
     }
 
-    /* Specific Text Styling */
     .text-line {
-      margin: 8px 0;
+      margin: 10px 0;
       opacity: 0;
       transform: translateY(20px);
     }
@@ -123,52 +110,53 @@
     .subtitle {
       color: #d1d5db;
       font-weight: 300;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
     }
 
     .special-card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       padding: 40px 30px;
       border-radius: 20px;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-      max-width: 600px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+      max-width: 620px;
       width: 90%;
     }
   </style>
 </head>
 <body>
 
-  <!-- Animation Canvas for Stars, Petals & Hearts -->
+  <!-- Animation Canvas -->
   <canvas id="mainCanvas"></canvas>
 
-  <!-- SCENE 1 -->
+  <!-- SCENE 1: Welcome -->
   <div id="scene1" class="scene active">
     <h2 id="s1-text1" class="text-line" style="font-size: 1.8rem;">Something Special Is Waiting For You... ✨</h2>
     <p id="s1-text2" class="text-line subtitle" style="font-size: 1.3rem; margin-top: 15px;">Would You Like To See It?</p>
     <button id="s1-btn" class="btn text-line" onclick="goToScene2()">Open ✨</button>
   </div>
 
-  <!-- SCENE 2 -->
+  <!-- SCENE 2: The Star Particle Formation -->
   <div id="scene2" class="scene">
-    <h3 id="s2-text1" class="text-line subtitle">Among Billions Of Stars...</h3>
-    <h3 id="s2-text2" class="text-line subtitle">One Star Always Catches My Attention...</h3>
+    <h3 id="s2-text1" class="text-line subtitle">Among Billions Of Stars In This Endless Universe...</h3>
+    <h3 id="s2-text2" class="text-line subtitle">Every Night Tells A Different Story...</h3>
+    <h3 id="s2-text3" class="text-line subtitle">But One Star Always Catches My Attention...</h3>
+    <h3 id="s2-text4" class="text-line subtitle" style="color: #ff8fa3; font-weight: 600;">The Purest & Brightest Of Them All...</h3>
     
-    <div id="s2-star-glow" class="text-line" style="display:none; margin-top: 20px;">
-      <div class="name-title">✨ Morium ❤️ ✨</div>
-      <p id="s2-text3" class="subtitle" style="font-size: 1.2rem; margin-top: 10px;">You Make Every Moment Brighter.</p>
+    <!-- Subtitle after particles form the name -->
+    <div id="s2-after-name" style="margin-top: 180px;">
+      <p id="s2-text5" class="text-line subtitle" style="font-size: 1.3rem;">You Make Every Single Moment Brighter. ✨</p>
+      <button id="s2-btn" class="btn text-line" style="display:none;" onclick="goToScene3()">Continue ➜</button>
     </div>
-
-    <button id="s2-btn" class="btn text-line" style="display:none;" onclick="goToScene3()">Continue ➜</button>
   </div>
 
-  <!-- SCENE 3 -->
+  <!-- SCENE 3: Final Message -->
   <div id="scene3" class="scene">
     <div class="special-card">
       <div id="s3-heart" class="glowing-heart text-line">❤️</div>
       
-      <p id="s3-l1" class="text-line" style="font-size: 1.4rem; color: #ff8fa3; font-weight: 600;">Dear Morium,</p>
+      <p id="s3-l1" class="text-line" style="font-size: 1.5rem; color: #ff8fa3; font-weight: 600;">Dear Morium,</p>
       <p id="s3-l2" class="text-line subtitle">Thank You For Being Such A Wonderful Person.</p>
       <p id="s3-l3" class="text-line subtitle">Your Smile Makes Ordinary Days Feel Special.</p>
       <p id="s3-l4" class="text-line subtitle">I Hope You Always Stay Happy...</p>
@@ -180,7 +168,6 @@
   </div>
 
   <script>
-    // --- CANVAS BACKGROUND ANIMATION ---
     const canvas = document.getElementById('mainCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -189,10 +176,11 @@
     let shootingStars = [];
     let petals = [];
     let hearts = [];
+    let particles = [];
 
     let currentScene = 1;
     let dimOtherStars = false;
-    let chosenStarActive = false;
+    let animateParticlesToText = false;
 
     function resize() {
       width = canvas.width = window.innerWidth;
@@ -201,7 +189,7 @@
     window.addEventListener('resize', resize);
     resize();
 
-    // Init Stars
+    // Background Stars Init
     for (let i = 0; i < 400; i++) {
       stars.push({
         x: Math.random() * width,
@@ -212,7 +200,6 @@
       });
     }
 
-    // Shooting Star Generator
     function createShootingStar() {
       if (Math.random() < 0.03) {
         shootingStars.push({
@@ -220,13 +207,11 @@
           y: Math.random() * (height / 2),
           length: Math.random() * 80 + 40,
           speed: Math.random() * 10 + 6,
-          angle: 45,
           alpha: 1
         });
       }
     }
 
-    // Rose Petal Generator (For Scene 3)
     function createPetal() {
       if (currentScene === 3 && Math.random() < 0.1) {
         petals.push({
@@ -241,7 +226,6 @@
       }
     }
 
-    // Floating Heart Generator (For Scene 3)
     function createHeart() {
       if (currentScene === 3 && Math.random() < 0.05) {
         hearts.push({
@@ -254,16 +238,56 @@
       }
     }
 
-    // Main Draw Loop
+    // CREATE STAR PARTICLES FOR MORIUM NAME
+    function initNameParticles() {
+      particles = [];
+      const offscreen = document.createElement('canvas');
+      const offCtx = offscreen.getContext('2d');
+      offscreen.width = width;
+      offscreen.height = height;
+
+      // Draw hidden text to sample pixels
+      let fontSize = Math.min(width / 7, 90);
+      offCtx.font = `bold ${fontSize}px 'Dancing Script', cursive`;
+      offCtx.fillStyle = "white";
+      offCtx.textAlign = "center";
+      offCtx.textBaseline = "middle";
+      offCtx.fillText("✨ Morium ❤️ ✨", width / 2, height / 2 - 20);
+
+      const imageData = offCtx.getImageData(0, 0, width, height).data;
+
+      // Sample pixel positions
+      let gap = 4;
+      for (let y = 0; y < height; y += gap) {
+        for (let x = 0; x < width; x += gap) {
+          let index = (y * width + x) * 4;
+          if (imageData[index + 3] > 128) {
+            // Random start position from around screen (Stars coming together)
+            let startX = Math.random() * width;
+            let startY = Math.random() * height;
+
+            particles.push({
+              x: startX,
+              y: startY,
+              targetX: x,
+              targetY: y,
+              size: Math.random() * 2 + 1,
+              alpha: Math.random(),
+              color: Math.random() > 0.3 ? '#ff6b8b' : '#ffffff'
+            });
+          }
+        }
+      }
+    }
+
+    // MAIN RENDER LOOP
     function animate() {
       ctx.clearRect(0, 0, width, height);
 
-      // Draw Stars
+      // Stars
       stars.forEach(star => {
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        
-        // Dim stars effect for Scene 2
         let targetAlpha = dimOtherStars ? 0.05 : star.alpha;
         ctx.fillStyle = `rgba(255, 255, 255, ${targetAlpha})`;
         ctx.fill();
@@ -296,7 +320,24 @@
         if (sStar.alpha <= 0) shootingStars.splice(index, 1);
       });
 
-      // Draw Petals
+      // Star Particles forming Morium
+      if (animateParticlesToText) {
+        particles.forEach(p => {
+          // Lerp movement to target text shape
+          p.x += (p.targetX - p.x) * 0.05;
+          p.y += (p.targetY - p.y) * 0.05;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = p.color;
+          ctx.fill();
+          ctx.shadowBlur = 0; // Reset glow
+        });
+      }
+
+      // Petals
       createPetal();
       petals.forEach((p, index) => {
         ctx.save();
@@ -315,7 +356,7 @@
         if (p.y > height + 20) petals.splice(index, 1);
       });
 
-      // Draw Hearts
+      // Hearts
       createHeart();
       hearts.forEach((h, index) => {
         ctx.font = `${h.size}px serif`;
@@ -333,68 +374,63 @@
     animate();
 
 
-    // --- SCENE SEQUENCING (GSAP) ---
-
-    // Initial Scene 1 Animations
+    // TIMELINES
     window.onload = () => {
       gsap.to("#s1-text1", { opacity: 1, y: 0, duration: 1.5, delay: 0.5 });
-      gsap.to("#s1-text2", { opacity: 1, y: 0, duration: 1.5, delay: 2.5 });
-      gsap.to("#s1-btn", { opacity: 1, y: 0, duration: 1, delay: 3.5 });
+      gsap.to("#s1-text2", { opacity: 1, y: 0, duration: 1.5, delay: 2.2 });
+      gsap.to("#s1-btn", { opacity: 1, y: 0, duration: 1, delay: 3.2 });
     };
 
-    // Transition Scene 1 -> Scene 2
     function goToScene2() {
       currentScene = 2;
-      const s1 = document.getElementById('scene1');
-      const s2 = document.getElementById('scene2');
-
-      s1.classList.remove('active');
+      document.getElementById('scene1').classList.remove('active');
       
       setTimeout(() => {
-        s2.classList.add('active');
+        document.getElementById('scene2').classList.add('active');
 
-        // Line 1
+        // Text Sequence
         gsap.to("#s2-text1", { opacity: 1, y: 0, duration: 1.2, delay: 0.5 });
-
-        // Line 2 & Dim Stars Effect
+        gsap.to("#s2-text2", { opacity: 1, y: 0, duration: 1.2, delay: 2.0 });
+        
         setTimeout(() => {
           dimOtherStars = true; // Dim stars on canvas
-          gsap.to("#s2-text2", { opacity: 1, y: 0, duration: 1.2 });
-        }, 2200);
+          gsap.to("#s2-text3", { opacity: 1, y: 0, duration: 1.2 });
+        }, 3800);
 
-        // Bright Star Reveal ("Morium")
+        gsap.to("#s2-text4", { opacity: 1, y: 0, duration: 1.2, delay: 5.5 });
+
+        // Fade out lines & assemble particle name
         setTimeout(() => {
-          // Fade out intro lines of scene 2
-          gsap.to("#s2-text1, #s2-text2", { opacity: 0, duration: 1 });
+          gsap.to("#s2-text1, #s2-text2, #s2-text3, #s2-text4", { opacity: 0, duration: 1 });
 
           setTimeout(() => {
-            document.getElementById('s2-star-glow').style.display = 'block';
-            document.getElementById('s2-btn').style.display = 'inline-block';
+            initNameParticles();
+            animateParticlesToText = true; // Particles fly together to spell MORIUM
 
-            gsap.to("#s2-star-glow", { opacity: 1, y: 0, duration: 1.5 });
-            gsap.to("#s2-text3", { opacity: 1, y: 0, duration: 1.2, delay: 1 });
-            gsap.to("#s2-btn", { opacity: 1, y: 0, duration: 1, delay: 2 });
+            // Show subtitle & continue button after name is formed
+            setTimeout(() => {
+              document.getElementById('s2-btn').style.display = 'inline-block';
+              gsap.to("#s2-text5", { opacity: 1, y: 0, duration: 1.2 });
+              gsap.to("#s2-btn", { opacity: 1, y: 0, duration: 1, delay: 1 });
+            }, 2500);
+
           }, 1000);
 
-        }, 4500);
+        }, 8000);
 
       }, 1000);
     }
 
-    // Transition Scene 2 -> Scene 3
     function goToScene3() {
       currentScene = 3;
-      dimOtherStars = false; // Restore stars brightness
+      dimOtherStars = false;
+      animateParticlesToText = false; // Hide particle name
 
-      const s2 = document.getElementById('scene2');
-      const s3 = document.getElementById('scene3');
-
-      s2.classList.remove('active');
+      document.getElementById('scene2').classList.remove('active');
 
       setTimeout(() => {
-        s3.classList.add('active');
+        document.getElementById('scene3').classList.add('active');
 
-        // Staggered text animations for Scene 3
         const sequence = [
           "#s3-heart",
           "#s3-l1",
