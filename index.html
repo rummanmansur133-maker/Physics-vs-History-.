@@ -1,500 +1,421 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A Special Surprise for Morium</title>
-  <!-- Google Fonts for Typography -->
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&family=Sacramento&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Something Special For Morium</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- GSAP Animation Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
   <style>
-    /* --- Reset & Base --- */
-    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
-    
-    body {
-      background: #0a0a0c;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Montserrat', sans-serif;
-      overflow: hidden;
-      perspective: 1000px; /* For 3D effects */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    /* --- Background Magic (Gradient + Floating Hearts) --- */
-    .bg-animation {
-      position: fixed;
+    body, html {
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #111113 0%, #2a0816 50%, #111113 100%);
-      z-index: -1;
+      overflow: hidden;
+      background: #050515;
+      font-family: 'Poppins', sans-serif;
+      color: #ffffff;
     }
-    .bg-heart {
-      position: absolute;
-      color: rgba(255, 71, 87, 0.15);
-      font-size: 20px;
-      animation: floatBG infinite linear;
+
+    /* Background Canvas */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
       pointer-events: none;
     }
-    @keyframes floatBG {
-      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-    }
 
-    /* --- Fancy Mobile Container (Glassmorphism) --- */
-    .mobile-frame {
-      width: 90%;
-      max-width: 370px;
-      height: 85vh;
-      max-height: 670px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 40px;
-      backdrop-filter: blur(15px) saturate(180%);
-      -webkit-backdrop-filter: blur(15px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 25px 45px rgba(0,0,0,0.5), 0 0 30px rgba(232, 67, 147, 0.2);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      padding: 25px;
-      text-align: center;
-    }
-
-    /* --- Page handling --- */
-    .page {
-      display: none;
+    /* Scene Overlay Containers */
+    .scene {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
+      z-index: 2;
+      display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      text-align: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+    }
+
+    .scene.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Typography & Buttons */
+    h1, h2 {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 1px;
+    }
+
+    .name-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.5rem;
+      color: #ff6b8b;
+      text-shadow: 0 0 20px rgba(255, 107, 139, 0.8), 0 0 40px rgba(255, 107, 139, 0.5);
+      margin: 15px 0;
+    }
+
+    .btn {
+      margin-top: 30px;
+      padding: 14px 36px;
+      font-size: 1.1rem;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      background: linear-gradient(135deg, #ff4b6e, #a83279);
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255, 75, 110, 0.5);
+      outline: none;
+      transform: scale(1);
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 30px rgba(255, 75, 110, 0.8);
+    }
+
+    /* Glow Elements */
+    .glowing-heart {
+      font-size: 4rem;
+      color: #ff3366;
+      text-shadow: 0 0 25px #ff3366, 0 0 50px #ff3366;
+      margin-bottom: 20px;
+      animation: pulse 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); text-shadow: 0 0 15px #ff3366; }
+      100% { transform: scale(1.15); text-shadow: 0 0 35px #ff3366, 0 0 60px #ff3366; }
+    }
+
+    /* Specific Text Styling */
+    .text-line {
+      margin: 8px 0;
       opacity: 0;
       transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .page.active {
-      display: flex;
-      opacity: 1;
-      transform: translateY(0);
     }
 
-    /* --- Fancy Elements --- */
-    .heart-icon-main {
-      font-size: 60px;
-      color: #ff4757;
-      margin-bottom: 20px;
-      animation: heartPulse 1.5s infinite;
-      filter: drop-shadow(0 0 10px rgba(255, 71, 87, 0.6));
-    }
-    @keyframes heartPulse {
-      0% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255, 71, 87, 0.4)); }
-      50% { transform: scale(1.15); filter: drop-shadow(0 0 15px rgba(255, 71, 87, 0.8)); }
-      100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255, 71, 87, 0.4)); }
+    .subtitle {
+      color: #d1d5db;
+      font-weight: 300;
+      font-size: 1.2rem;
     }
 
-    h2.fancy-text {
-      font-family: 'Montserrat', sans-serif;
-      color: #fff;
-      font-size: 20px;
-      font-weight: 400;
-      line-height: 1.6;
-      margin-bottom: 40px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    }
-
-    /* --- Fancy Button --- */
-    .fancy-btn {
-      background: linear-gradient(45deg, #e84393, #ff4757);
-      color: white;
-      border: none;
-      padding: 15px 45px;
-      font-size: 16px;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 600;
-      border-radius: 50px;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      box-shadow: 0 5px 20px rgba(232, 67, 147, 0.4);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .fancy-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(232, 67, 147, 0.6);
-    }
-    .fancy-btn:active { transform: translateY(1px); }
-
-    /* --- Page 2: Fancy Envelope (3D) --- */
-    .envelope-wrapper {
-      position: relative;
-      width: 250px;
-      height: 160px;
-      background: #333;
-      cursor: pointer;
-      margin-top: 50px;
-      border-radius: 0 0 10px 10px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      transform-style: preserve-3d;
-      transition: transform 0.5s ease, box-shadow 0.5s ease;
-    }
-    .envelope-wrapper:hover {
-      transform: translateY(-5px) rotateX(5deg);
-      box-shadow: 0 15px 40px rgba(232, 67, 147, 0.2);
-    }
-    .envelope-wrapper::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 0; height: 0;
-      border-left: 125px solid transparent;
-      border-right: 125px solid transparent;
-      border-top: 90px solid #555;
-      transform-origin: top;
-      transition: transform 0.6s ease;
-      z-index: 2;
-    }
-    .envelope-wrapper.open::before {
-      transform: rotateX(180deg);
-    }
-    .click-text {
-      position: absolute;
-      top: 60%; left: 50%;
-      transform: translate(-50%, -50%);
-      color: #bbb;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      z-index: 1;
-    }
-
-    /* --- Letter Popup (Glassmorphism) --- */
-    .letter-popup {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%) scale(0) rotate(-10deg);
-      width: 90%;
-      height: 85%;
-      background: rgba(255, 255, 255, 0.07);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 25px;
+    .special-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-      z-index: 10;
-      opacity: 0;
-      transition: all 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      max-width: 600px;
+      width: 90%;
     }
-    .letter-popup.show {
-      transform: translate(-50%, -50%) scale(1) rotate(0deg);
-      opacity: 1;
-    }
-    
-    .letter-text {
-      text-align: left;
-      overflow-y: auto;
-      padding-right: 5px;
-    }
-    .letter-text::-webkit-scrollbar { width: 3px; }
-    .letter-text::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
-
-    .dear {
-      font-family: 'Sacramento', cursive;
-      font-size: 36px;
-      color: #ff4757;
-      margin-bottom: 15px;
-      opacity: 0;
-    }
-    .main-body {
-      color: #ddd;
-      font-size: 15px;
-      line-height: 1.8;
-      font-weight: 400;
-      min-height: 100px;
-    }
-    .love-you {
-      font-family: 'Dancing Script', cursive;
-      font-size: 26px;
-      color: #e84393;
-      font-weight: 700;
-      margin-top: 20px;
-      opacity: 0;
-    }
-
-    /* --- Page 3 --- */
-    .page-3 h2.fancy-title {
-      font-family: 'Sacramento', cursive;
-      font-size: 40px;
-      color: #fff;
-      margin-bottom: 50px;
-      text-shadow: 0 0 10px rgba(255,255,255,0.5);
-    }
-    .btn-group {
-      display: flex; gap: 20px;
-      position: relative;
-    }
-    .btn-no {
-      background: rgba(255,255,255,0.1);
-      color: #aaa;
-      box-shadow: none;
-    }
-    .btn-no:hover { background: rgba(255,255,255,0.15); color: #fff; box-shadow: none;}
-
-    /* --- Rain Elements --- */
-    .rain-heart {
-      position: absolute;
-      font-size: 22px;
-      user-select: none;
-      pointer-events: none;
-      animation: heartRain 3s linear forwards;
-      z-index: 5;
-    }
-    @keyframes heartRain {
-      0% { transform: translateY(-10vh) scale(0) rotate(0deg); opacity: 1; }
-      10% { transform: translateY(0vh) scale(1.2); }
-      100% { transform: translateY(90vh) scale(0.8) rotate(360deg); opacity: 0; }
-    }
-    
-    #fireworksCanvas {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: 20;
-    }
-
   </style>
 </head>
 <body>
 
-  <!-- Magical Background -->
-  <div class="bg-animation" id="bgAnimation"></div>
+  <!-- Animation Canvas for Stars, Petals & Hearts -->
+  <canvas id="mainCanvas"></canvas>
 
-  <!-- Mobile Frame -->
-  <div class="mobile-frame">
-    <canvas id="fireworksCanvas"></canvas>
+  <!-- SCENE 1 -->
+  <div id="scene1" class="scene active">
+    <h2 id="s1-text1" class="text-line" style="font-size: 1.8rem;">Something Special Is Waiting For You... ✨</h2>
+    <p id="s1-text2" class="text-line subtitle" style="font-size: 1.3rem; margin-top: 15px;">Would You Like To See It?</p>
+    <button id="s1-btn" class="btn text-line" onclick="goToScene2()">Open ✨</button>
+  </div>
 
-    <!-- Page 1 -->
-    <div class="page page-1 active" id="page1">
-      <div class="heart-icon-main">💖</div>
-      <h2 class="fancy-text">something special is waiting for you,, do you want to enter?</h2>
-      <button class="fancy-btn" onclick="nextPage(2)">Enter</button>
+  <!-- SCENE 2 -->
+  <div id="scene2" class="scene">
+    <h3 id="s2-text1" class="text-line subtitle">Among Billions Of Stars...</h3>
+    <h3 id="s2-text2" class="text-line subtitle">One Star Always Catches My Attention...</h3>
+    
+    <div id="s2-star-glow" class="text-line" style="display:none; margin-top: 20px;">
+      <div class="name-title">✨ Morium ❤️ ✨</div>
+      <p id="s2-text3" class="subtitle" style="font-size: 1.2rem; margin-top: 10px;">You Make Every Moment Brighter.</p>
     </div>
 
-    <!-- Page 2 -->
-    <div class="page page-2" id="page2">
-      <div class="heart-icon-main" style="font-size: 40px; position: absolute; top: 20px;">✉️</div>
-      <div class="envelope-wrapper" id="envelope" onclick="openLetter()">
-        <span class="click-text">Click to open</span>
-      </div>
+    <button id="s2-btn" class="btn text-line" style="display:none;" onclick="goToScene3()">Continue ➜</button>
+  </div>
 
-      <!-- Letter Popup -->
-      <div class="letter-popup" id="letterPopup">
-        <div class="letter-text scrollbar">
-          <div class="dear" id="dearText">Dear Morium,</div>
-          <div class="main-body" id="bodyText"></div>
-          <div class="love-you" id="loveYouText">I love you</div>
-        </div>
-        <button class="fancy-btn" style="padding: 10px 30px; font-size: 14px; margin-top: 15px; display: none;" id="letterNextBtn" onclick="nextPage(3)">Next</button>
-      </div>
-    </div>
-
-    <!-- Page 3 -->
-    <div class="page page-3" id="page3">
-      <div class="heart-icon-main">💍</div>
-      <h2 class="fancy-title">Will you be mine forever?</h2>
-      <div class="btn-group">
-        <button class="fancy-btn" onclick="celebrate()">Yes</button>
-        <button class="fancy-btn btn-no" id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
-      </div>
+  <!-- SCENE 3 -->
+  <div id="scene3" class="scene">
+    <div class="special-card">
+      <div id="s3-heart" class="glowing-heart text-line">❤️</div>
+      
+      <p id="s3-l1" class="text-line" style="font-size: 1.4rem; color: #ff8fa3; font-weight: 600;">Dear Morium,</p>
+      <p id="s3-l2" class="text-line subtitle">Thank You For Being Such A Wonderful Person.</p>
+      <p id="s3-l3" class="text-line subtitle">Your Smile Makes Ordinary Days Feel Special.</p>
+      <p id="s3-l4" class="text-line subtitle">I Hope You Always Stay Happy...</p>
+      <p id="s3-l5" class="text-line subtitle">And Keep Shining Like A Star. ✨</p>
+      
+      <h2 id="s3-l6" class="text-line" style="margin-top: 25px; color: #ff4b6e; font-size: 1.8rem;">❤️ You Are Truly Special ❤️</h2>
+      <p id="s3-l7" class="text-line" style="font-size: 0.85rem; color: #9ca3af; margin-top: 15px;">Made With Love, Just For You.</p>
     </div>
   </div>
 
   <script>
-    // --- Create Floating Background Hearts ---
-    const bg = document.getElementById('bgAnimation');
-    for (let i = 0; i < 20; i++) {
-      const heart = document.createElement('div');
-      heart.classList.add('bg-heart');
-      heart.innerHTML = '❤️';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
-      heart.style.animationDelay = Math.random() * 5 + 's';
-      bg.appendChild(heart);
+    // --- CANVAS BACKGROUND ANIMATION ---
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    let stars = [];
+    let shootingStars = [];
+    let petals = [];
+    let hearts = [];
+
+    let currentScene = 1;
+    let dimOtherStars = false;
+    let chosenStarActive = false;
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Init Stars
+    for (let i = 0; i < 400; i++) {
+      stars.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 1.5,
+        alpha: Math.random(),
+        speed: Math.random() * 0.02
+      });
     }
 
-    // --- Page Navigation ---
-    function nextPage(pageNumber) {
-      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-      document.getElementById('page' + pageNumber).classList.add('active');
-      
-      // If moving to page 1, reset elements just in case
-      if(pageNumber === 1) {
-          resetLetter();
-      }
-    }
-
-    // --- Page 2: Letter Animation & Typewriter ---
-    const letterText = "Tumi hole Amar jiboner sob kisu,, Tumi Amar Kase the most perfect girl in the world, Ami Jani na Ami tomar Kase Kemon but Ami tomake aktai Kotha bolte chai 'Ami tomake valobasi'";
-
-    function openLetter() {
-      const envelope = document.getElementById('envelope');
-      const popup = document.getElementById('letterPopup');
-      
-      envelope.classList.add('open');
-      
-      // Show popup after envelope flap opens
-      setTimeout(() => {
-        popup.classList.add('show');
-        startTypewriter();
-      }, 600);
-    }
-    
-    function startTypewriter() {
-        const dear = document.getElementById('dearText');
-        const body = document.getElementById('bodyText');
-        const loveYou = document.getElementById('loveYouText');
-        const nextBtn = document.getElementById('letterNextBtn');
-        
-        // Reset texts
-        body.innerHTML = "";
-        dear.style.opacity = 0;
-        loveYou.style.opacity = 0;
-        nextBtn.style.display = 'none';
-
-        // 1. Fade in Dear
-        setTimeout(() => { 
-            dear.style.transition = "opacity 1s ease";
-            dear.style.opacity = 1; 
-        }, 500);
-
-        // 2. Typewriter Body
-        let i = 0;
-        setTimeout(() => {
-            function type() {
-                if (i < letterText.length) {
-                    body.innerHTML += letterText.charAt(i);
-                    i++;
-                    setTimeout(type, 50); // Speed of typing
-                } else {
-                    // 3. Fade in Love You & Next Button when done
-                    setTimeout(() => {
-                        loveYou.style.transition = "opacity 1s ease";
-                        loveYou.style.opacity = 1;
-                        setTimeout(() => {
-                            nextBtn.style.display = 'inline-block';
-                            nextBtn.style.animation = "zoomIn 0.5s ease";
-                        }, 500);
-                    }, 500);
-                }
-            }
-            type();
-        }, 1500);
-    }
-
-    function resetLetter() {
-        document.getElementById('envelope').classList.remove('open');
-        document.getElementById('letterPopup').classList.remove('show');
-    }
-
-    // --- Page 3: 'No' Button Trick ---
-    function moveNoButton() {
-      const btn = document.getElementById('noBtn');
-      // Calculate random move within visible container area
-      const x = Math.random() * 120 - 60; // moves -60px to +60px
-      const y = Math.random() * 80 - 40;  // moves -40px to +40px
-      btn.style.transition = "transform 0.2s ease";
-      btn.style.transform = `translate(${x}px, ${y}px)`;
-    }
-
-    // --- Celebration: Love Rain & Fireworks ---
-    function celebrate() {
-      startHeartRain();
-      startFireworks();
-      
-      // Update Page 3 content with a fancy ending
-      const page3 = document.getElementById('page3');
-      page3.innerHTML = `
-        <div class="heart-icon-main">💖</div>
-        <h2 class="fancy-title" style="font-size: 45px;">Yay! 🎉</h2>
-        <p style="color: #fff; font-family: 'Dancing Script', cursive; font-size: 28px; margin-top: -20px;">I Love You Forever, Morium!</p>
-      `;
-    }
-
-    // Heart Rain Effect inside the Mobile Frame
-    function startHeartRain() {
-      const frame = document.querySelector('.mobile-frame');
-      setInterval(() => {
-        const heart = document.createElement('div');
-        heart.classList.add('rain-heart');
-        // Random romantic emojis
-        const hearts = ['❤️', '💖', '💗', '💕', '🌸', '✨'];
-        heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
-        heart.style.left = (Math.random() * 80 + 10) + '%'; // Keep within frame
-        heart.style.animationDuration = (Math.random() * 1.5 + 2) + 's';
-        frame.appendChild(heart);
-
-        setTimeout(() => { heart.remove(); }, 3000);
-      }, 150); // Create new heart every 150ms
-    }
-
-    // Canvas Fireworks Effect inside the Mobile Frame
-    function startFireworks() {
-      const canvas = document.getElementById('fireworksCanvas');
-      const ctx = canvas.getContext('2d');
-      // Set canvas size to match the frame
-      canvas.width = canvas.parentElement.clientWidth;
-      canvas.height = canvas.parentElement.clientHeight;
-
-      let particles = [];
-
-      function createParticle(x, y) {
-        return {
-          x: x,
-          y: y,
-          dx: (Math.random() - 0.5) * 7,
-          dy: (Math.random() - 0.5) * 7,
-          size: Math.random() * 3 + 1,
-          color: `hsl(${Math.random() * 360}, 100%, 70%)`,
-          life: 100
-        };
-      }
-
-      function createBurst() {
-          const x = Math.random() * canvas.width;
-          const y = Math.random() * (canvas.height * 0.6); // Keep in top 60%
-          for (let i = 0; i < 50; i++) {
-            particles.push(createParticle(x, y));
-          }
-      }
-
-      // Start bursts
-      setInterval(createBurst, 500); // New burst every 500ms
-
-      function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach((p, index) => {
-          if (p.life > 0) {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fillStyle = p.color;
-            ctx.fill();
-            p.x += p.dx;
-            p.y += p.dy;
-            p.dy += 0.05; // gravity
-            p.life -= 1;
-            p.size *= 0.98; // shrink
-          } else {
-            particles.splice(index, 1);
-          }
+    // Shooting Star Generator
+    function createShootingStar() {
+      if (Math.random() < 0.03) {
+        shootingStars.push({
+          x: Math.random() * width,
+          y: Math.random() * (height / 2),
+          length: Math.random() * 80 + 40,
+          speed: Math.random() * 10 + 6,
+          angle: 45,
+          alpha: 1
         });
-        requestAnimationFrame(animate);
       }
-      animate();
+    }
+
+    // Rose Petal Generator (For Scene 3)
+    function createPetal() {
+      if (currentScene === 3 && Math.random() < 0.1) {
+        petals.push({
+          x: Math.random() * width,
+          y: -20,
+          size: Math.random() * 8 + 6,
+          speedY: Math.random() * 2 + 1,
+          speedX: Math.sin(Math.random()) * 1.5,
+          angle: Math.random() * 360,
+          spin: Math.random() * 2 - 1
+        });
+      }
+    }
+
+    // Floating Heart Generator (For Scene 3)
+    function createHeart() {
+      if (currentScene === 3 && Math.random() < 0.05) {
+        hearts.push({
+          x: Math.random() * width,
+          y: height + 20,
+          size: Math.random() * 15 + 10,
+          speedY: Math.random() * 1.5 + 0.8,
+          alpha: 1
+        });
+      }
+    }
+
+    // Main Draw Loop
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Draw Stars
+      stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        
+        // Dim stars effect for Scene 2
+        let targetAlpha = dimOtherStars ? 0.05 : star.alpha;
+        ctx.fillStyle = `rgba(255, 255, 255, ${targetAlpha})`;
+        ctx.fill();
+
+        star.alpha += star.speed;
+        if (star.alpha > 1 || star.alpha < 0) star.speed = -star.speed;
+      });
+
+      // Shooting Stars
+      createShootingStar();
+      shootingStars.forEach((sStar, index) => {
+        ctx.beginPath();
+        let endX = sStar.x + sStar.length * Math.cos(Math.PI / 4);
+        let endY = sStar.y + sStar.length * Math.sin(Math.PI / 4);
+
+        let gradient = ctx.createLinearGradient(sStar.x, sStar.y, endX, endY);
+        gradient.addColorStop(0, `rgba(255, 255, 255, ${sStar.alpha})`);
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = 2;
+        ctx.moveTo(sStar.x, sStar.y);
+        ctx.lineTo(endX, endY);
+        ctx.stroke();
+
+        sStar.x += sStar.speed;
+        sStar.y += sStar.speed;
+        sStar.alpha -= 0.015;
+
+        if (sStar.alpha <= 0) shootingStars.splice(index, 1);
+      });
+
+      // Draw Petals
+      createPetal();
+      petals.forEach((p, index) => {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.angle * Math.PI) / 180);
+        ctx.fillStyle = '#ff4d6d';
+        ctx.beginPath();
+        ctx.ellipse(0, 0, p.size, p.size / 2, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        p.y += p.speedY;
+        p.x += p.speedX;
+        p.angle += p.spin;
+
+        if (p.y > height + 20) petals.splice(index, 1);
+      });
+
+      // Draw Hearts
+      createHeart();
+      hearts.forEach((h, index) => {
+        ctx.font = `${h.size}px serif`;
+        ctx.fillStyle = `rgba(255, 51, 102, ${h.alpha})`;
+        ctx.fillText('❤️', h.x, h.y);
+
+        h.y -= h.speedY;
+        h.alpha -= 0.003;
+
+        if (h.y < -20 || h.alpha <= 0) hearts.splice(index, 1);
+      });
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+
+    // --- SCENE SEQUENCING (GSAP) ---
+
+    // Initial Scene 1 Animations
+    window.onload = () => {
+      gsap.to("#s1-text1", { opacity: 1, y: 0, duration: 1.5, delay: 0.5 });
+      gsap.to("#s1-text2", { opacity: 1, y: 0, duration: 1.5, delay: 2.5 });
+      gsap.to("#s1-btn", { opacity: 1, y: 0, duration: 1, delay: 3.5 });
+    };
+
+    // Transition Scene 1 -> Scene 2
+    function goToScene2() {
+      currentScene = 2;
+      const s1 = document.getElementById('scene1');
+      const s2 = document.getElementById('scene2');
+
+      s1.classList.remove('active');
+      
+      setTimeout(() => {
+        s2.classList.add('active');
+
+        // Line 1
+        gsap.to("#s2-text1", { opacity: 1, y: 0, duration: 1.2, delay: 0.5 });
+
+        // Line 2 & Dim Stars Effect
+        setTimeout(() => {
+          dimOtherStars = true; // Dim stars on canvas
+          gsap.to("#s2-text2", { opacity: 1, y: 0, duration: 1.2 });
+        }, 2200);
+
+        // Bright Star Reveal ("Morium")
+        setTimeout(() => {
+          // Fade out intro lines of scene 2
+          gsap.to("#s2-text1, #s2-text2", { opacity: 0, duration: 1 });
+
+          setTimeout(() => {
+            document.getElementById('s2-star-glow').style.display = 'block';
+            document.getElementById('s2-btn').style.display = 'inline-block';
+
+            gsap.to("#s2-star-glow", { opacity: 1, y: 0, duration: 1.5 });
+            gsap.to("#s2-text3", { opacity: 1, y: 0, duration: 1.2, delay: 1 });
+            gsap.to("#s2-btn", { opacity: 1, y: 0, duration: 1, delay: 2 });
+          }, 1000);
+
+        }, 4500);
+
+      }, 1000);
+    }
+
+    // Transition Scene 2 -> Scene 3
+    function goToScene3() {
+      currentScene = 3;
+      dimOtherStars = false; // Restore stars brightness
+
+      const s2 = document.getElementById('scene2');
+      const s3 = document.getElementById('scene3');
+
+      s2.classList.remove('active');
+
+      setTimeout(() => {
+        s3.classList.add('active');
+
+        // Staggered text animations for Scene 3
+        const sequence = [
+          "#s3-heart",
+          "#s3-l1",
+          "#s3-l2",
+          "#s3-l3",
+          "#s3-l4",
+          "#s3-l5",
+          "#s3-l6",
+          "#s3-l7"
+        ];
+
+        sequence.forEach((selector, index) => {
+          gsap.to(selector, {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            delay: 0.4 * (index + 1)
+          });
+        });
+
+      }, 1000);
     }
   </script>
 </body>
