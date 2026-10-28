@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Ultimate Debate</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #080b14;
+  color: white;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.card {
+  width: 100%;
+  max-width: 480px;
+  padding: 35px 22px;
+  text-align: center;
+  border: 1px solid #30374d;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #151b2c, #090d18);
+  box-shadow: 0 0 35px #1677ff20;
+}
+
+.tag {
+  color: #65aaff;
+  font-size: 12px;
+  letter-spacing: 4px;
+  margin-bottom: 25px;
+}
+
+h1 {
+  font-size: 27px;
+  margin-bottom: 32px;
+}
+
+.equation {
+  font-size: clamp(25px, 7vw, 38px);
+  font-weight: 900;
+  line-height: 1.5;
+  margin-bottom: 22px;
+  overflow-wrap: anywhere;
+}
+
+.physics {
+  color: #60a5fa;
+  text-shadow: 0 0 18px #2684ff80;
+}
+
+.history {
+  color: #fb7185;
+}
+
+.sub {
+  color: #a6afc4;
+  font-size: 14px;
+  margin: 12px 0;
+  line-height: 1.6;
+}
+
+button {
+  margin-top: 25px;
+  padding: 14px 22px;
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  background: #3b82f6;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#answer {
+  display: none;
+  margin-top: 25px;
+  padding: 18px 12px;
+  border-radius: 12px;
+  background: #ffffff0a;
+  line-height: 1.8;
+}
+
+.footer {
+  margin-top: 30px;
+  color: #68748b;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+</style>
+</head>
+
+<body>
+  <main class="card">
+    <div class="tag">SCIENTIFIC DEBATE #001</div>
+
+    <h1>THE ULTIMATE COMPARISON</h1>
+
+    <div class="equation">
+      <span class="physics">PHYSICS</span>
+      <span> ≫ </span>
+      <span class="history">HISTORY<sup>3</sup></span>
+    </div>
+
+    <p class="sub">
+      Difficulty(Physics) &gt; Difficulty(History)
+    </p>
+
+    <p class="sub">
+      One deals with the laws of the universe.<br>
+      The other deals with what already happened.
+    </p>
+
+    <button onclick="reveal()">UNDERSTAND THE EQUATION ⚡</button>
+
+    <div id="answer">
+      <h2>CASE CLOSED 💀</h2>
+      <p>
+        History can be hard to memorize.<br>
+        But Physics makes you understand,
+        calculate and prove.
+      </p>
+      <br>
+      <strong>Different subjects. Different challenges.</strong>
+      <p class="sub">But calling Physics “Easysics”? Nice try. 😂</p>
+    </div>
+
+    <div class="footer">MADE FOR THE FRIENDLY DEBATE</div>
+  </main>
+
+<script>
+function reveal() {
+  const answer = document.getElementById("answer");
+  answer.style.display = "block";
+  document.querySelector("button").textContent =
+    "THE TRUTH HAS BEEN REVEALED ☠️";
+}
+</script>
+</body>
+</html>
