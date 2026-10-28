@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyond the Subjects</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;display:grid;place-items:center;
+ padding:20px;background:#0b1020;color:#f4f6ff;
+ font-family:Arial,sans-serif
+}
+.card{
+ width:100%;max-width:440px;min-height:480px;
+ padding:30px 23px;border:1px solid #29334d;
+ border-radius:25px;text-align:center;
+ background:linear-gradient(145deg,#18243c,#101522);
+ display:flex;flex-direction:column;justify-content:center
+}
+.tag{font-size:11px;letter-spacing:3px;color:#8ab8ff}
+h1{font-size:29px;line-height:1.3;margin:25px 0}
+p{font-size:16px;line-height:1.8;color:#c8d0e2}
+.equation{font-size:25px;font-weight:bold;margin:20px 0}
+.blue{color:#75b5ff}
+.gold{color:#ffd27d}
+.progress{height:4px;background:#303a51;border-radius:8px;margin:25px 0}
+#bar{height:100%;width:20%;background:#72aaff;border-radius:8px}
+button{
+ width:100%;padding:15px;margin-top:12px;border:0;border-radius:12px;
+ font-size:15px;font-weight:bold;background:#78aaff;color:#091225
+}
+button.secondary{background:#293650;color:white}
+.small{font-size:12px;color:#8794ae}
+</style>
+</head>
+
+<body>
+<main class="card">
+ <div class="tag">A LITTLE THOUGHT EXPERIMENT</div>
+ <div class="progress"><div id="bar"></div></div>
+ <div id="content"></div>
+ <button id="next" onclick="goNext()">Let's Begin →</button>
+ <button id="back" class="secondary" onclick="goBack()" hidden>← Back</button>
+ <p class="small" id="count"></p>
+</main>
+
+<script>
+const pages = [
+{
+ title:"Two Subjects.<br>Two Different Challenges.",
+ text:"History helps us understand the past. Physics helps us understand how the universe works.<br><br>But what happens when we compare the way we study them?",
+ button:"Explore the Difference →"
+},
+{
+ title:"Challenge 01",
+ text:"HISTORY<br><br>Who discovered the law of gravity?<br>What year did a historical event happen?<br><br>These questions often require knowledge, memory and understanding of context.",
+ eq:"Remember + Understand",
+ button:"Next Challenge →"
+},
+{
+ title:"Challenge 02",
+ text:"PHYSICS<br><br>A 2 kg object accelerates at 3 m/s². What force acts on it?<br><br>You need to identify the law, choose the formula and calculate the answer.",
+ eq:"F = ma = 2 × 3 = 6 N",
+ button:"Go Deeper →"
+},
+{
+ title:"The Real Difference",
+ text:"Physics problems can combine concepts, formulas, mathematics and logical reasoning.<br><br>History can also require deep analysis, source evaluation, cause-and-effect reasoning and interpretation.",
+ eq:"Different Skills. Different Demands.",
+ button:"See the Conclusion →"
+},
+{
+ title:"The Final Thought",
+ text:"In many school-level comparisons, Physics can feel harder because solving unfamiliar problems requires several skills at once.<br><br>But difficulty depends on the person, the topic and the level of study.",
+ eq:"Physics ≫ History ?",
+ button:"Replay the Experience ↻"
+}
+];
+
+let current=0;
+function render(){
+ const p=pages[current];
+ document.getElementById("content").innerHTML=
+  `<h1>${p.title}</h1><p>${p.text}</p>`+
+  (p.eq?`<div class="equation ${current===2?'blue':current===4?'gold':''}">${p.eq}</div>`:"");
+ document.getElementById("next").textContent=p.button;
+ document.getElementById("back").hidden=current===0;
+ document.getElementById("bar").style.width=
+  ((current+1)/pages.length*100)+"%";
+ document.getElementById("count").textContent=
+  `PAGE ${current+1} OF ${pages.length}`;
+}
+function goNext(){
+ if(current===pages.length-1){current=0}
+ else{current++}
+ render();
+}
+function goBack(){
+ if(current>0)current--;
+ render();
+}
+render();
+</script>
+</body>
+</html>
