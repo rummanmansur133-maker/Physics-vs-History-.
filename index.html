@@ -1,1 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Chrono-Analysis Terminal v4.2</title>
+    <!-- Tailwind CSS for futuristic sci-fi theme -->
+    <script src="https://tailwindcss.com"></script>
+    <!-- MathJax for rendering gorgeous equations -->
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        @import url('https://googleapis.com');
+        .font-mono-sci { font-family: 'Share Tech Mono', monospace; }
+        .glitch-border { border: 1px solid rgba(16, 185, 129, 0.3); box-shadow: 0 0 15px rgba(16, 185, 129, 0.1); }
+        .active-tab { border-color: #34d399 !important; color: #34d399 !important; background: rgba(52, 211, 153, 0.1); }
+    </style>
+</head>
+<body class="bg-black text-emerald-400 font-mono-sci min-h-screen flex items-center justify-center p-3 sm:p-6 overflow-x-hidden selection:bg-emerald-900 selection:text-emerald-200">
+
+    <!-- SCREEN 1: THE 10-SECOND SCIENTIFIC LOADER -->
+    <div id="loader-screen" class="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center p-6 transition-opacity duration-1000">
+        <div class="max-w-md w-full space-y-6 text-left border border-emerald-800 p-6 rounded bg-zinc-950/80 shadow-[0_0_30px_rgba(16,185,129,0.15)]">
+            <div class="flex items-center justify-between border-b border-emerald-800 pb-2 text-xs uppercase tracking-widest text-emerald-600">
+                <span>System Initialization</span>
+                <span id="loader-timer">10.0s</span>
+            </div>
+            
+            <!-- Terminal Log Streams -->
+            <div id="log-stream" class="h-40 overflow-y-auto text-xs space-y-1 text-emerald-500 font-mono scrollbar-none">
+                <div>[SYSTEM] Initializing Quantum Core...</div>
+            </div>
+
+            <!-- Scientific Progress Bar -->
+            <div class="space-y-2">
+                <div class="w-full bg-zinc-900 h-2 rounded border border-emerald-900 overflow-hidden">
+                    <div id="progress-bar" class="bg-emerald-500 h-full w-0 transition-all duration-300 shadow-[0_0_10px_#10b981]"></div>
+                </div>
+                <div class="flex justify-between text-[10px] text-emerald-600 tracking-wider">
+                    <span>SECTOR_CALIBRATION</span>
+                    <span id="progress-percent">0%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN DASHBOARD CONTENT (Hidden until loader finishes) -->
+    <div id="main-dashboard" class="hidden max-w-4xl w-full bg-zinc-950 border-2 border-emerald-900/60 rounded-lg shadow-[0_0_50px_rgba(0,0,0,0.8)] p-4 sm:p-8 space-y-6">
+        
+        <!-- Top Lab Header -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-emerald-900/60 pb-4 gap-2">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-bold tracking-wider text-emerald-300">QUANTUM DATA TERMINAL</h1>
+                <p class="text-xs text-emerald-600 tracking-widest uppercase mt-0.5">Project: Physics vs History Complexity Verification</p>
+            </div>
+            <div class="text-right text-xs text-emerald-500 border border-emerald-900 px-3 py-1 bg-zinc-900 rounded">
+                STATUS: <span class="text-emerald-400 animate-pulse">COMPUTING OVERLORD</span>
+            </div>
+        </div>
+
+        <!-- 🧪 MULTI-PAGE NAVIGATION TABS -->
+        <div class="grid grid-cols-3 gap-2 border-b border-emerald-900/40 pb-4">
+            <button onclick="switchPage('page1')" id="tab-page1" class="active-tab text-center py-2.5 px-1 text-xs sm:text-sm font-bold uppercase tracking-wider border border-emerald-900 rounded cursor-pointer transition-all hover:bg-emerald-950/30">
+                [01] Axioms
+            </button>
+            <button onclick="switchPage('page2')" id="tab-page2" class="text-center py-2.5 px-1 text-xs sm:text-sm font-bold uppercase tracking-wider border border-emerald-900 rounded cursor-pointer transition-all hover:bg-emerald-950/30">
+                [02] Calculations
+            </button>
+            <button onclick="switchPage('page3')" id="tab-page3" class="text-center py-2.5 px-1 text-xs sm:text-sm font-bold uppercase tracking-wider border border-emerald-900 rounded cursor-pointer transition-all hover:bg-emerald-950/30">
+                [03] Verdict
+            </button>
+        </div>
+
+        <!-- 📄 PAGE 1: THE AXIOMS -->
+        <div id="page1" class="page-content space-y-6">
+            <div class="bg-emerald-950/10 p-5 rounded-lg border border-emerald-900/40 text-center space-y-4">
+                <span class="text-xs font-bold uppercase tracking-widest text-emerald-500 block">Core Mathematical Postulates</span>
+                <div class="text-2xl sm:text-3xl font-mono text-emerald-300 space-y-4 py-2">
+                    <div>\[\text{Physics} \neq \text{History}^3\]</div>
+                    <div class="text-[11px] text-emerald-600 tracking-normal mt-1 leading-relaxed">Postulate I: History spans dimensions of human behavior, societal variance, and macro-economics. Physics is constrained to flat geometric coordinates.</div>
+                    <div class="pt-4 border-t border-emerald-900/30">\[\text{Physics} \gg \text{History}\]</div>
+                    <div class="text-[11px] text-emerald-600 tracking-normal mt-1 leading-relaxed font-mono">Postulate II: Relates directly to the absolute capacity to trigger severe, non-linear cranial distress (headaches) inside secondary schools.</div>
+                </div>
+            </div>
+            <div class="p-4 border border-emerald-900/30 bg-zinc-900/40 rounded text-sm text-emerald-400/90 leading-relaxed">
+                <strong class="text-emerald-300">Abstract:</strong> This analytics engine cross-references high-school level physical constants against human historical timelines to evaluate cognitive efficiency. Click on tab <span class="text-emerald-300 font-bold">[02] Calculations</span> to observe the complete algorithmic teardown.
+            </div>
+        </div>
+
+        <!-- 📄 PAGE 2: THE EQUATIONS ROAST -->
+        <div id="page2" class="page-content hidden space-y-5">
+            
+            <!-- Equation Item 1 -->
+            <div class="p-4 bg-zinc-900/30 border border-emerald-900/40 rounded-lg space-y-3">
+                <div class="flex items-center justify-between text-xs border-b border-emerald-900/30 pb-1.5 text-emerald-500">
+                    <span>ANOMALY ALPHA: KINEMATIC HEADACHES</span>
+                    <span class="text-red-500/80">COMPLEXITY: CRITICAL</span>
+                </div>
+                <div class="bg-black p-3 rounded border border-emerald-950 text-center overflow-x-auto text-emerald-300">
+                    \[v^2 = u^2 + 2as \quad \text{and} \quad s = ut + \frac{1}{2}at^2\]
+                </div>
+                <p class="text-xs sm:text-sm text-emerald-400/80 leading-relaxed">
+                    <span class="text-emerald-300 font-bold">Analysis:</span> You spend hours calculating vectors just to figure out where a rolling rock stops. Meanwhile, in History: the rock stops, someone builds a massive fortress with it, a betrayal occurs, and a whole empire falls. Real drama, zero calculus.
+                </p>
+            </div>
+
+            <!-- Equation Item 2 -->
+            <div class="p-4 bg-zinc-900/30 border border-emerald-900/40 rounded-lg space-y-3">
+                <div class="flex items-center justify-between text-xs border-b border-emerald-900/30 pb-1.5 text-emerald-500">
+                    <span>ANOMALY BETA: INVISIBLE ELECTRODYNAMICS</span>
+                    <span class="text-red-500/80">COMPLEXITY: SEVERE</span>
+                </div>
+                <div class="bg-black p-3 rounded border border-emerald-950 text-center overflow-x-auto text-emerald-300">
+                    \[F = k \frac{q_1 q_2}{r^2} \quad \text{and} \quad R = \rho \frac{l}{A}\]
+                </div>
+                <p class="text-xs sm:text-sm text-emerald-400/80 leading-relaxed">
+                    <span class="text-emerald-300 font-bold">Analysis:</span> Physics forces you to chase imaginary ghosts. You are literally crying over floating electrical charges and wire cross-sectional areas you can't even see. History presents actual battle lines, real human strategies, and macro-politics. It is premium content with free grades.
+                </p>
+            </div>
+
+            <!-- Equation Item 3 -->
+            <div class="p-4 bg-zinc-900/30 border border-emerald-900/40 rounded-lg space-y-3">
+                <div class="flex items-center justify-between text-xs border-b border-emerald-900/30 pb-1.5 text-emerald-500">
+                    <span>ANOMALY GAMMA: DECIMAL CATASTROPHE</span>
+                    <span class="text-red-500/80">COMPLEXITY: FATAL</span>
+                </div>
+                <div class="bg-black p-3 rounded border border-emerald-950 text-center overflow-x-auto text-emerald-300 space-y-2">
+                    <div>\[h = 6.626 \times 10^{-34} \text{ J}\cdot\text{s}\]</div>
+                    <div>\[G = 6.674 \times 10^{-11} \text{ N}\cdot\text{m}^2/\text{kg}^2\]</div>
+                </div>
+                <p class="text-xs sm:text-sm text-emerald-400/80 leading-relaxed">
+                    <span class="text-emerald-300 font-bold">Analysis:</span> If your finger slips and you miss a single \(10^{-34}\) scientific exponent, your entire equation implodes and your test paper gets a zero. History relies on massive, grand movements. Furthermore, the scientists who built these laws are simply chapters inside our History books. History is the host environment.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- 📄 PAGE 3: THE FINAL ROAST VERDICT -->
 
